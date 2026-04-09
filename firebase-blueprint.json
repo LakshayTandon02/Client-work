@@ -1,0 +1,44 @@
+{
+  "entities": {
+    "Appointment": {
+      "title": "Appointment",
+      "description": "A patient's appointment booking request.",
+      "type": "object",
+      "properties": {
+        "patientName": { "type": "string", "description": "Full name of the patient" },
+        "patientEmail": { "type": "string", "format": "email", "description": "Email address of the patient" },
+        "patientPhone": { "type": "string", "description": "Phone number of the patient" },
+        "departmentId": { "type": "string", "description": "ID of the selected department" },
+        "doctorId": { "type": "string", "description": "ID of the selected doctor" },
+        "date": { "type": "string", "format": "date-time", "description": "Scheduled date and time" },
+        "reason": { "type": "string", "description": "Reason for the visit" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "cancelled"], "description": "Current status of the appointment" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the appointment was created" }
+      },
+      "required": ["patientName", "patientEmail", "patientPhone", "departmentId", "doctorId", "date", "status"]
+    },
+    "Testimonial": {
+      "title": "Testimonial",
+      "description": "A patient's feedback or story.",
+      "type": "object",
+      "properties": {
+        "patientName": { "type": "string", "description": "Name of the patient" },
+        "content": { "type": "string", "description": "The testimonial text" },
+        "rating": { "type": "number", "description": "Rating out of 5" },
+        "isApproved": { "type": "boolean", "description": "Whether the testimonial is approved for public display" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the testimonial was submitted" }
+      },
+      "required": ["patientName", "content", "isApproved"]
+    }
+  },
+  "firestore": {
+    "/appointments/{appointmentId}": {
+      "schema": "Appointment",
+      "description": "Collection of appointment bookings"
+    },
+    "/testimonials/{testimonialId}": {
+      "schema": "Testimonial",
+      "description": "Collection of patient testimonials"
+    }
+  }
+}

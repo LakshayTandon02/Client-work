@@ -1,0 +1,41 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // 1. ABSOLUTE ADMIN BYPASS
+    match /{path=**} {
+      allow read, write: if request.auth != null && (
+        request.auth.uid == "9l3CZTsysuQMNd1KNcPfCagkmQT2" || 
+        request.auth.token.email == "lakshaytandon125@gmail.com"
+      );
+    }
+
+    // 2. DOCTORS
+    match /doctors/{doctorId} {
+      allow read: if true;
+    }
+
+    // 3. APPOINTMENTS
+    match /appointments/{appointmentId} {
+      allow read, create: if request.auth != null && (
+        resource.data.patientUid == request.auth.uid || 
+        request.resource.data.patientUid == request.auth.uid
+      );
+    }
+
+    // 4. TESTIMONIALS
+    match /testimonials/{testimonialId} {
+      allow read: if resource.data.get('isApproved', false) == true || (
+        request.auth != null && resource.data.get('patientUid', '') == request.auth.uid
+      );
+      allow create: if request.auth != null && (
+        request.resource.data.get('isApproved', true) == false
+      );
+    }
+
+    // 5. USERS
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}
