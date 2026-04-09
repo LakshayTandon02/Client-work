@@ -12,6 +12,7 @@ import Appointment from "@/pages/Appointment";
 import AdminDashboard from "@/pages/AdminDashboard";
 import Auth from "@/pages/Auth";
 import Profile from "@/pages/Profile";
+import Chatbot from "@/components/Chatbot";
 
 export default function App() {
   return (
@@ -33,6 +34,7 @@ export default function App() {
             </Routes>
           </main>
           <Footer />
+          <Chatbot />
           <Toaster position="top-center" />
         </div>
       </Router>
